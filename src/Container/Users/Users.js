@@ -85,7 +85,7 @@ function Users() {
                 return <CustomButton type="danger">Delete</CustomButton>;
             },
         },
-    ];
+    ]; 
     return (
         <div id="user-module-container">
             <Row>

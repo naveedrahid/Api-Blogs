@@ -2,6 +2,8 @@ export const authenticatedRoutesConstant = {
   Home: "/",
   User: "/users",
   Categories: "/categories",
+  AddCategory: "/add-category",
+  EditCategori: "/edit-category",
   Comments: "/comments",
 };
 
