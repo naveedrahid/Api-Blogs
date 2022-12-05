@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import AuthService from './util/auth.service';
+import AuthenticatedRoutes from './routes/AuthenticatedRoutes';
+import UnAuthenticatedRoutes from './routes/UnAuthenticatedRoutes';
+import './App.less';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {
+        AuthService.isTokenExist() ?
+          (
+            <AuthenticatedRoutes />
+          )
+          :
+          (
+            <UnAuthenticatedRoutes />
+          )}
     </div>
   );
 }
