@@ -11,7 +11,10 @@ import { authenticatedRoutesConstant } from "../util/constant";
 function AuthenticatedRoutes() {
     return (
         <Routes>
-            <Route path={authenticatedRoutesConstant.Home} element={<CustomLayout />}>
+            <Route
+                path={authenticatedRoutesConstant.Home}
+                element={<CustomLayout />}
+            >
                 <Route
                     path={authenticatedRoutesConstant.Categories}
                     element={<Categories />}
@@ -20,7 +23,14 @@ function AuthenticatedRoutes() {
                     path={authenticatedRoutesConstant.AddCategory}
                     element={<AddEditCategory />}
                 />
-                <Route path={authenticatedRoutesConstant.User} element={<Users />} />
+                <Route
+                    path={authenticatedRoutesConstant.EditCategory}
+                    element={<AddEditCategory />}
+                />
+                <Route
+                    path={authenticatedRoutesConstant.User}
+                    element={<Users />}
+                />
                 <Route
                     path={authenticatedRoutesConstant.Comments}
                     element={<CustomComment />}

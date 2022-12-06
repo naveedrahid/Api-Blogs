@@ -25,6 +25,10 @@ const Categories = () => {
     const addCategoryBtnHandler = () =>{
         navigate(authenticatedRoutesConstant.AddCategory);
     }
+    const editCategoryHandler = (record) =>{
+        const id = record?.cat_id;
+        navigate(authenticatedRoutesConstant.EditCategory.replace(":id", id));
+    }
 
     useEffect(() => {
         function load() {
@@ -55,7 +59,7 @@ const Categories = () => {
             title: "Edit",
             key: "edit",
             render: (text, record, index) => {
-                return <CustomButton type="ghost">Edit</CustomButton>;
+                return <CustomButton type="ghost" onClick={() => editCategoryHandler(record)}>Edit</CustomButton>;
             },
         },
         {

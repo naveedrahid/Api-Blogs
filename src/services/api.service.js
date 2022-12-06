@@ -1,4 +1,5 @@
 import {create} from 'apisauce';
+import {notification} from 'antd';
 import { unAuthenticatedRoutesConstant, userInfo } from '../util/constant';
 import AuthService from '../util/auth.service'
 
@@ -23,16 +24,23 @@ const patch = (url, data, config) => {
     const response =  apiInstance.patch(url, data,config);
     return handleResponse(response);
 }
-const deleteRequest = (url, data, config) => {
-    const response =  apiInstance.delete(url, data,config);
+const deleteRequest = (url, queryParams, config) => {
+    const response =  apiInstance.delete(url, queryParams,config);
     return handleResponse(response);
 }
 
-const handleResponse = (response) =>{
-    if(response.status === 401){
+const handleResponse = async (response) =>{
+    const checkResponse = await response;
+    if(checkResponse.status === 401){
         localStorage.removeItem(userInfo.TOKEN);
         localStorage.removeItem(userInfo.USERNAME);
         window.location.href = unAuthenticatedRoutesConstant.Login;
+    }
+    if (!checkResponse.ok) {
+        notification.info({
+            message:`Something went wrong!`,
+            placement:"topRight",
+        });
     }
     return response;
 }

@@ -1,9 +1,13 @@
-import { Col, Row } from 'antd';
+import { Col, Modal, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { UserService } from '../../services/users.service';
+import AuthService from '../../util/auth.service';
 import { UtilService } from '../../util/util.service';
 import CustomButton from '../CustomButton/CustomButton';
 import GridView from '../GridView/GridView';
+import { ExclamationCircleOutlined } from "@ant-design/icons";
+
+const {confirm} = Modal;
 
 function Users() {
 
@@ -19,6 +23,27 @@ function Users() {
         setLoading(false);
     }
 
+    const deleteUser = async (record) => {
+        setLoading(true);
+        const { ok } = await UserService.deleteUsers(record?.user_id);
+        if (ok) {
+            getUsers();
+        }
+        setLoading(false);
+    }
+    const userDeleteHandler = (record) => {
+        confirm({
+            title: 'Do You Want Delete This User!',
+            icon: <ExclamationCircleOutlined />,
+            onOk() {
+                deleteUser(record);
+            },
+            onCancel() {
+                console.log('cancel');
+            },
+        });
+    }
+
     useEffect(() => {
         function load() {
             getUsers();
@@ -27,6 +52,11 @@ function Users() {
     }, []);
 
     const columns = [
+        {
+            title: "User Id",
+            dataIndex: "user_id",
+            key: "user_id",
+        },
         {
             title: "User Name",
             dataIndex: "username",
@@ -82,10 +112,15 @@ function Users() {
             title: "Delete",
             key: "delete",
             render: (text, record, index) => {
-                return <CustomButton type="danger">Delete</CustomButton>;
+                const checkLoggedInUser = AuthService.getUserName === record.username ? true : false;
+                return <CustomButton
+                    disabled={checkLoggedInUser}
+                    onClick={userDeleteHandler}
+                    type="danger"
+                >Delete</CustomButton>;
             },
         },
-    ]; 
+    ];
     return (
         <div id="user-module-container">
             <Row>
