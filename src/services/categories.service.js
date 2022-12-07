@@ -21,10 +21,15 @@ const updateCategories = async (id, payload) => {
     const response = apiService.put(`${categoryUrl.url}/${id}`, payload);
     return response;
 }
+const deleteCategory = async (id) => {
+    const response = apiService.deleteRequest(`${categoryUrl.url}/${id}`);
+    return response;
+}
 
 export const CategoryService = {
     getCategories,
     AddCategories,
     editCategories,
     updateCategories,
+    deleteCategory,
 }

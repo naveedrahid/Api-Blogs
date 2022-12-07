@@ -19,7 +19,7 @@ const getUsers = async (data) => {
     const response = apiService.get(userServiceUrl.url, data);
     return response;
 }
-const deleteUsers = async (user_id) => {
+const deleteUser = async (user_id) => {
     const response = apiService.deleteRequest(`${userServiceUrl.url}/${user_id}`);
     return response;
 }
@@ -28,5 +28,5 @@ export const UserService = {
     login,
     register,
     getUsers,
-    deleteUsers,
+    deleteUser,
 }

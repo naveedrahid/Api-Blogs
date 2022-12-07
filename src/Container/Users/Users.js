@@ -7,7 +7,7 @@ import CustomButton from '../CustomButton/CustomButton';
 import GridView from '../GridView/GridView';
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 
-const {confirm} = Modal;
+const { confirm } = Modal;
 
 function Users() {
 
@@ -23,9 +23,16 @@ function Users() {
         setLoading(false);
     }
 
+    useEffect(() => {
+        function load() {
+            getUsers();
+        };
+        load();
+    }, []);
+
     const deleteUser = async (record) => {
         setLoading(true);
-        const { ok } = await UserService.deleteUsers(record?.user_id);
+        const { ok } = await UserService.deleteUser(record?.user_id);
         if (ok) {
             getUsers();
         }
@@ -33,7 +40,7 @@ function Users() {
     }
     const userDeleteHandler = (record) => {
         confirm({
-            title: 'Do You Want Delete This User!',
+            title: "Do You Want Delete This User!",
             icon: <ExclamationCircleOutlined />,
             onOk() {
                 deleteUser(record);
@@ -43,13 +50,6 @@ function Users() {
             },
         });
     }
-
-    useEffect(() => {
-        function load() {
-            getUsers();
-        };
-        load();
-    }, []);
 
     const columns = [
         {
@@ -115,7 +115,7 @@ function Users() {
                 const checkLoggedInUser = AuthService.getUserName === record.username ? true : false;
                 return <CustomButton
                     disabled={checkLoggedInUser}
-                    onClick={userDeleteHandler}
+                    onClick={() => userDeleteHandler(record)}
                     type="danger"
                 >Delete</CustomButton>;
             },

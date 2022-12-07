@@ -1,11 +1,13 @@
-import { Col, Row } from 'antd';
+import { Col, Modal, notification, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { CategoryService } from '../../services/categories.service';
 import { authenticatedRoutesConstant } from '../../util/constant';
 import { UtilService } from '../../util/util.service';
 import CustomButton from '../CustomButton/CustomButton';
 import GridView from '../GridView/GridView';
 import {useNavigate} from 'react-router-dom';
+const { confirm } = Modal;
 
 const Categories = () => {
 
@@ -37,6 +39,31 @@ const Categories = () => {
         load();
     }, []);
 
+    const categoryDeleteRequest = async(record) =>{
+        setLoading(true);
+        const {ok} = await CategoryService.deleteCategory(record?.cat_id);
+        if(ok){
+            notification.success({
+                message:"Category successfully Deleted",
+                placement: "topRight",
+            });
+            apiGetCategories();
+        }
+        setLoading(false);
+    }
+    const categoryDeleteHandler = async (record) =>{
+        confirm({
+            title:"Are You Sure Want to Delete This?",
+            icon: <ExclamationCircleOutlined />,
+            onOk(){
+                categoryDeleteRequest(record);
+            },
+            onCancel(){
+                console.log('cancel');
+            },
+        })
+    }
+
     const columns = [
         {
             title: "id",
@@ -66,7 +93,7 @@ const Categories = () => {
             title: "Delete",
             key: "delete",
             render: (text, record, index) => {
-                return <CustomButton type="danger">Delete</CustomButton>
+                return <CustomButton type="danger" onClick={() => categoryDeleteHandler(record)}>Delete</CustomButton>
             },
         },
     ];
