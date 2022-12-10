@@ -2,10 +2,12 @@ import { Col, Modal, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { UserService } from '../../services/users.service';
 import AuthService from '../../util/auth.service';
+import { useNavigate } from "react-router-dom";
 import { UtilService } from '../../util/util.service';
 import CustomButton from '../CustomButton/CustomButton';
 import GridView from '../GridView/GridView';
 import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { authenticatedRoutesConstant } from '../../util/constant';
 
 const { confirm } = Modal;
 
@@ -13,6 +15,7 @@ function Users() {
 
     const [loading, setLoading] = useState(false);
     const [users, setUsers] = useState(null);
+    const navigate = useNavigate();
 
     const getUsers = async () => {
         setLoading(true);
@@ -49,6 +52,15 @@ function Users() {
                 console.log('cancel');
             },
         });
+    }
+
+    const addBtnHandler =(e)=>{
+        e.preventDefault();
+        navigate(authenticatedRoutesConstant.addUser);
+    }
+    const editBtnHandler = (e, user_id) =>{
+        e.preventDefault();
+        navigate(authenticatedRoutesConstant.editUser.replace(':id', user_id));
     }
 
     const columns = [
@@ -105,7 +117,7 @@ function Users() {
             title: "Edit",
             key: "edit",
             render: (text, record, index) => {
-                return <CustomButton type="ghost">Edit</CustomButton>;
+                return <CustomButton type="ghost" onClick={(e)=> editBtnHandler(e, record?.user_id)}>Edit</CustomButton>;
             },
         },
         {
@@ -125,7 +137,7 @@ function Users() {
         <div id="user-module-container">
             <Row>
                 <Col>
-                    <CustomButton type="primary">Add User</CustomButton>
+                    <CustomButton type="primary" onClick={addBtnHandler}>Add User</CustomButton>
                 </Col>
             </Row>
             <GridView dataSource={users} columns={columns} loading={loading} />

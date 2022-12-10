@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import AddEditCategory from "../Container/Categories/AddEditCategory";
 import Categories from "../Container/Categories/Categories";
 import CustomComment from "../Container/CustomComment/CustomComment";
+import AddEditUser from "../Container/Users/AddEditUser";
 import Users from "../Container/Users/Users";
 import CustomLayout from "../customLayout/customLayout";
 import { authenticatedRoutesConstant } from "../util/constant";
@@ -30,6 +31,14 @@ function AuthenticatedRoutes() {
                 <Route
                     path={authenticatedRoutesConstant.User}
                     element={<Users />}
+                />
+                <Route
+                    path={authenticatedRoutesConstant.addUser}
+                    element={<AddEditUser />}
+                />
+                <Route
+                    path={authenticatedRoutesConstant.editUser}
+                    element={<AddEditUser />}
                 />
                 <Route
                     path={authenticatedRoutesConstant.Comments}

@@ -1,9 +1,11 @@
 export const authenticatedRoutesConstant = {
   Home: "/",
   User: "/users",
+  addUser:'/users/add',
+  editUser:'/users/edit/:id',
   Categories: "/categories",
-  AddCategory: "/add-category",
-  EditCategory: "/edit-category/:id",
+  AddCategory: "/categories/add",
+  EditCategory: "/categories/edit/:id",
   Comments: "/comments",
 };
 

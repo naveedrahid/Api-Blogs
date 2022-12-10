@@ -19,6 +19,10 @@ const getUsers = async (data) => {
     const response = apiService.get(userServiceUrl.url, data);
     return response;
 }
+const getUsersById = async (user_id) => {
+    const response = apiService.get(`${userServiceUrl.url}/${user_id}`);
+    return response;
+}
 const deleteUser = async (user_id) => {
     const response = apiService.deleteRequest(`${userServiceUrl.url}/${user_id}`);
     return response;
@@ -29,4 +33,5 @@ export const UserService = {
     register,
     getUsers,
     deleteUser,
+    getUsersById,
 }
