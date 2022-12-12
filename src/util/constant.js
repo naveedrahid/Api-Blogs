@@ -1,12 +1,16 @@
+import { notification } from "antd";
+
 export const authenticatedRoutesConstant = {
   Home: "/",
   User: "/users",
   addUser:'/users/add',
   editUser:'/users/edit/:id',
-  Categories: "/categories",
+  Categories: "/",
   AddCategory: "/categories/add",
   EditCategory: "/categories/edit/:id",
   Comments: "/comments",
+  Posts: "/posts",
+  addPosts: "/posts/add",
 };
 
 //login,register
@@ -20,5 +24,12 @@ export const userInfo = {
   TOKEN: "token",
   USERNAME: "username",
 };
+export const notificationMessage = (message)=>{
+  notification.success({
+      message: message,
+      placement: "topRight",
+      top:50,
+  });
+}
 
 export const FooterText = "Squadcodersdev 2022";

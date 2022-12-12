@@ -23,6 +23,10 @@ const getUsersById = async (user_id) => {
     const response = apiService.get(`${userServiceUrl.url}/${user_id}`);
     return response;
 }
+const updateUserByID = async (user_id, data) => {
+    const response = apiService.put(`${userServiceUrl.url}/${user_id}`, data);
+    return response;
+}
 const deleteUser = async (user_id) => {
     const response = apiService.deleteRequest(`${userServiceUrl.url}/${user_id}`);
     return response;
@@ -34,4 +38,5 @@ export const UserService = {
     getUsers,
     deleteUser,
     getUsersById,
+    updateUserByID,
 }

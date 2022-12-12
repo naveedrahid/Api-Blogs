@@ -26,7 +26,7 @@ const AddEditCategory = () => {
         setLoading(false);
         form.resetFields();
         if (ok) {
-            navigate(authenticatedRoutesConstant.Categories);
+            navigate(authenticatedRoutesConstant.Home);
         }
     }
     const CategoryEditByID = async (car_ID) => {
