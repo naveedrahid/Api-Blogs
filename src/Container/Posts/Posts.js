@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Row, Table } from 'antd';
+import { Col, Modal, notification, Row, Table } from 'antd';
 import CustomButton from '../CustomButton/CustomButton';
 import { postApiMethod } from '../../services/posts.service';
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { useNavigate } from 'react-router-dom';
 import { authenticatedRoutesConstant } from '../../util/constant';
+import { UtilService } from '../../util/util.service';
+const { confirm } = Modal;
 
 
 const Posts = () => {
@@ -16,6 +19,10 @@ const Posts = () => {
         e.preventDefault();
         navigate(authenticatedRoutesConstant.addPosts);
     }
+    const ediPostBtnHandler =(record)=>{
+        const id = record?.id;
+        navigate(authenticatedRoutesConstant.editPosts.replace(':id', id));
+    }
 
     const getPostall = async () => {
         setLoading(true);
@@ -24,6 +31,28 @@ const Posts = () => {
             setPosts(data?.results);
         }
         setLoading(false);
+    }
+    const deleteBtnHandler = async(record)=>{
+        setLoading(true);
+        const {ok} = await postApiMethod.deletePosts(record?.id);
+        setLoading(false);
+        notification.success({
+            message:"Post successfully Deleted",
+            placement: "topRight",
+        });
+    }
+
+    const deletePostBtnHandler = async (record) =>{
+        confirm({
+            title:"Are You Sure Want to Delete This?",
+            icon: <ExclamationCircleOutlined />,
+            onOk(){
+                deleteBtnHandler(record);
+            },
+            onCancel(){
+                console.log('cancel');
+            }
+        });
     }
 
     useEffect(() => {
@@ -45,18 +74,14 @@ const Posts = () => {
             key: 'post_title',
         },
         {
-            title: 'Author',
-            dataIndex: 'post_author',
-            key: 'post_author',
-        },
-        {
-            title: 'Date',
-            dataIndex: 'post_date',
-            key: 'post_date',
+            title: 'Post Category',
+            dataIndex: 'post_category_id',
+            key: 'post_category_id',
         },
         {
             title: 'Image',
             key: 'image',
+            width: '10%',
             render: (text, record, index) => {
                 if (!record?.image)
                     return 'No Image Found!';
@@ -78,19 +103,23 @@ const Posts = () => {
         },
         {
             title: 'Created At',
-            dataIndex: 'created_at',
             key: 'created_at',
+            render: (text, record, index) => {
+                return UtilService.convertDateToOurFormat(record?.created_at);
+            },
         },
         {
             title: 'Updated At',
-            dataIndex: 'updated_at',
             key: 'updated_at',
+            render: (text, record, index) => {
+                return UtilService.convertDateToOurFormat(record?.updated_at);
+            },
         },
         {
             title: "Edit",
             key: "edit",
             render: (text, record, index) => {
-                return <CustomButton type="ghost">Edit</CustomButton>;
+                return <CustomButton type="ghost" onClick={() => ediPostBtnHandler(record)}>Edit</CustomButton>;
             },
         },
         {
@@ -98,7 +127,7 @@ const Posts = () => {
             key: "delete",
             render: (text, record, index) => {
                 return (
-                    <CustomButton type="danger">
+                    <CustomButton type="danger" onClick={() => deletePostBtnHandler(record)}>
                         Delete
                     </CustomButton>
                 );

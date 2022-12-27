@@ -11,6 +11,7 @@ export const authenticatedRoutesConstant = {
   Comments: "/comments",
   Posts: "/posts",
   addPosts: "/posts/add",
+  editPosts: "/posts/edit/:id",
 };
 
 //login,register

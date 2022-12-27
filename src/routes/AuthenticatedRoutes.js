@@ -27,6 +27,10 @@ function AuthenticatedRoutes() {
                     element={<AddEditPost />}
                 />
                 <Route
+                    path={authenticatedRoutesConstant.editPosts}
+                    element={<AddEditPost />}
+                />
+                <Route
                     path={authenticatedRoutesConstant.Home}
                     element={<Categories />}
                 />

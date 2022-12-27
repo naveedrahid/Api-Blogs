@@ -23,11 +23,11 @@ const AddEditUser = () => {
     const addUserCallback = async (values) => {
         setLoading(true);
         const { ok } = await UserService.register(values);
-        setLoading(false);
         form.resetFields();
+        setLoading(false);
         if (ok) {
-            notificationMessage('Add user successfully');
             navigate(authenticatedRoutesConstant.User);
+            notificationMessage('Add user successfully');
         }
     }
 
@@ -63,7 +63,7 @@ const AddEditUser = () => {
         if (params?.id) {
             updateUserCallback(values);
         } else {
-            addUserCallback(values);
+           addUserCallback(values);
         }
     }
     return (
