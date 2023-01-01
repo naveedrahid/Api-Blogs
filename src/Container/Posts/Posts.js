@@ -35,11 +35,12 @@ const Posts = () => {
     const deleteBtnHandler = async(record)=>{
         setLoading(true);
         const {ok} = await postApiMethod.deletePosts(record?.id);
-        setLoading(false);
         notification.success({
             message:"Post successfully Deleted",
             placement: "topRight",
         });
+        await getPostall();
+        setLoading(false);
     }
 
     const deletePostBtnHandler = async (record) =>{

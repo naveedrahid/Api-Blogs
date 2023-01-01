@@ -23,8 +23,8 @@ const getUsersById = async (user_id) => {
     const response = apiService.get(`${userServiceUrl.url}/${user_id}`);
     return response;
 }
-const updateUserByID = async (user_id, data) => {
-    const response = apiService.put(`${userServiceUrl.url}/${user_id}`, data);
+const updateUserByID = async (user_id, payload) => {
+    const response = apiService.put(`${userServiceUrl.url}/${user_id}`, payload);
     return response;
 }
 const deleteUser = async (user_id) => {

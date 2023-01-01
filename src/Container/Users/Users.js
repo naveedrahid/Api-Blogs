@@ -54,11 +54,11 @@ function Users() {
         });
     }
 
-    const addBtnHandler =(e)=>{
+    const addBtnHandler = (e) => {
         e.preventDefault();
         navigate(authenticatedRoutesConstant.addUser);
     }
-    const editBtnHandler = (e, user_id) =>{
+    const editBtnHandler = (e, user_id) => {
         e.preventDefault();
         navigate(authenticatedRoutesConstant.editUser.replace(':id', user_id));
     }
@@ -93,13 +93,14 @@ function Users() {
             title: "User Image",
             key: "user_image",
             render: (text, record, index) => {
-                if (!record?.user_image)
-                    return 'No Image Found!';
+                if (!record?.user_image) {
+                    return "No Image Found";
+                }
 
                 return (
                     <img src={record?.user_image} width="80" alt={record?.username} />
                 );
-            }
+            },
         },
         {
             title: "User Role",
@@ -117,7 +118,7 @@ function Users() {
             title: "Edit",
             key: "edit",
             render: (text, record, index) => {
-                return <CustomButton type="ghost" onClick={(e)=> editBtnHandler(e, record?.user_id)}>Edit</CustomButton>;
+                return <CustomButton type="ghost" onClick={(e) => editBtnHandler(e, record?.user_id)}>Edit</CustomButton>;
             },
         },
         {

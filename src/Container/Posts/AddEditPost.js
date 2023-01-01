@@ -59,7 +59,6 @@ const AddEditPost = () => {
                 post_status: setSinglePostObj.post_status,
                 post_content: setSinglePostObj.post_content,
                 post_category_id: setSinglePostObj.post_category_id,
-                //image: results?.image ? image: '',
             });
             setSinglePost(setSinglePostObj);
         }
@@ -77,7 +76,6 @@ const AddEditPost = () => {
     const onFinish = async (values) => {
         setLoading(true);
         const payload = new FormData();
-        console.log(payload);
         payload.append("post_title", values.post_title);
         payload.append("post_tags", values.post_tags);
         payload.append("post_category_id", values.post_category_id);
